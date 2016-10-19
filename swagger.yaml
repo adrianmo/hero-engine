@@ -1,0 +1,184 @@
+swagger: '2.0'
+
+##########################
+# API information        #
+##########################
+info:
+  title: Hero Project API
+  description: API for the Hero Project
+  version: "1.0.0"
+
+# array of all schemes that your API supports
+schemes:
+  - http
+
+produces:
+  - application/json
+
+##########################
+# Parameters             #
+##########################
+parameters:
+  hero-id:
+    name: hero-id
+    in: path
+    description: The Hero identifier
+    type: string
+    required: true
+
+##########################
+# Paths                  #
+##########################
+paths:
+  /hero:
+    get:
+      description: |
+        Returns a list with all heroes.
+      tags:
+        - Hero
+      responses:
+        200:
+          description: An array of Hero objects
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Hero'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /hero/{hero-id}:
+    parameters:
+      - $ref: '#/parameters/hero-id'
+    get:
+      description: |
+        Returns information about a single Hero.
+      tags:
+        - Hero
+      responses:
+        200:
+          description: An array of Hero objects
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/Hero'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /hero/{hero-id}/activate:
+    parameters:
+      - $ref: '#/parameters/hero-id'
+    post:
+      description: |
+        Activates a Hero.
+      tags:
+        - Hero
+      responses:
+        200:
+          description: The Hero has been activated successfully
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /hero/{hero-id}/events:
+    parameters:
+      - $ref: '#/parameters/hero-id'
+    get:
+      description: |
+        Returns the events for a particular Hero
+      tags:
+        - Hero
+        - Event
+      responses:
+        200:
+          description: An array of Event objects
+          properties:
+              data:
+                $ref: '#/definitions/Event'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /events:
+    get:
+      description: |
+        Returns all the events
+      tags:
+        - Event
+      responses:
+        200:
+          description: An array of Event objects
+          properties:
+              data:
+                $ref: '#/definitions/Event'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+##########################
+# Definitions            #
+##########################
+definitions:
+  Hero:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique identifier for the Hero (UUID)
+      email:
+        type: string
+        description: Email of the player
+      enabled:
+        type: boolean
+        description: Boolean indicating whether the Hero is enabled or not
+      name:
+        type: string
+        description: Name of the Hero
+      title:
+        type: string
+        description: Title of the Hero
+      class:
+        type: string
+        description: Class of the Hero
+      level:
+        type: integer
+        description: Level of the Hero
+      x_pos:
+        type: integer
+        description: X coordinate
+      y_pos:
+        type: integer
+        description: Y coordinate
+      created_at:
+        type: integer
+        description: Unix timestamp representing the time it was created.
+
+  Event:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique identifier for the Event (UUID)
+      hero_id:
+        type: string
+        description: Unique identifier for the Hero (UUID)
+      message:
+        type: string
+        description: Event message
+
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
