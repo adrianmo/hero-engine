@@ -7,7 +7,6 @@ import (
   log "github.com/Sirupsen/logrus"
 
   _ "github.com/go-sql-driver/mysql"
-  "fmt"
 )
 
 // GetDBConnection builds and returns the database connection
@@ -37,11 +36,11 @@ func SaveToDB(g *Game) error {
   defer db.Close()
 
   for _, hero := range g.heroes {
-      stmt, err := db.Prepare("INSERT INTO hero " +
-      "(player_name, player_lastname, hero_name, email, twitter, hclass, hero_online, token, hero_level, ttl, xpos, ypos, " +
+    stmt, err := db.Prepare("INSERT INTO hero " +
+      "(player_name, player_lastname, hero_name, email, twitter, hclass, hero_online, token, hero_level, race, title, ttl, xpos, ypos, " +
       " ring, amulet, charm, weapon, helm, tunic, gloves, shield, leggings, boots " +
       ") " +
-      "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) " +
+      "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) " +
       "ON DUPLICATE KEY UPDATE " +
       "hero_online=VALUES(hero_online), hero_level=VALUES(hero_level), ttl=VALUES(ttl), xpos=VALUES(xpos), ypos=VALUES(ypos), " +
       "ring=VALUES(ring), amulet=VALUES(amulet), charm=VALUES(charm), weapon=VALUES(weapon), " +
@@ -53,7 +52,7 @@ func SaveToDB(g *Game) error {
 
     ttl := int(hero.nextLevelAt.Sub(time.Now()).Seconds())
     res, err := stmt.Exec(hero.FirstName, hero.LastName, hero.HeroName, hero.Email, hero.Twitter, hero.HeroClass, hero.Enabled, hero.token,
-      hero.Level, hero.HeroClass, hero.HeroTitle, ttl, hero.Xpos, hero.Ypos,
+      hero.Level, hero.HeroRace, hero.HeroTitle, ttl, hero.Xpos, hero.Ypos,
       hero.Equipment.Ring, hero.Equipment.Amulet, hero.Equipment.Charm, hero.Equipment.Weapon, hero.Equipment.Helm, hero.Equipment.Tunic, hero.Equipment.Gloves, hero.Equipment.Shield, hero.Equipment.Leggings, hero.Equipment.Boots)
     if err != nil {
       log.Error(err)
@@ -117,16 +116,13 @@ func LoadFromDB(g *Game) error {
 
     hero.nextLevelAt = time.Now().Add(time.Duration(ttl) * time.Second)
     g.heroes = append(g.heroes, hero)
-
-    //Message Realm
-    var message = fmt.Sprintf("%s, %s, of the %s race has joined Bacelona's Fantasy Realm. Next Level in %d seconds.",hero.HeroName, hero.HeroTitle, hero.HeroRace, hero.getTTL())
-    g.sendEvent(message, hero)
-
   }
   err = rows.Err()
   if err != nil {
     return err
   }
+
+  log.Infof("Loaded %d Heros from database.", len(g.heroes))
 
   return nil
 }

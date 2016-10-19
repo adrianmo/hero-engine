@@ -61,7 +61,7 @@ func (g *Game) CheckChallenge() {
       if h1Score == h2Score {
         message = fmt.Sprintf("%s and %s fought and tied.", h1.HeroName, h2.HeroName)
       } else {
-        gain = int(math.Min(float64(h2.Level* challengeGainMultiplier), challengeMinGain))
+        gain = int(math.Min(float64(h2.Level*challengeGainMultiplier), challengeMinGain))
         if h1Score > h2Score {
           message = fmt.Sprintf("%s, [Level:%d / Equipment:%d] has challenged %s [Level:%d / Equipment:%d] in combat and won! %d seconds are removed from %s's clock.", h1.HeroName, h1.Level, h1.getTotalItems(), h2.HeroName, h2.Level, h2.getTotalItems(), gain, h1.HeroName)
           h1.updateTTL(0 - gain)
@@ -87,6 +87,6 @@ func heroesDistance(h1 *Hero, h2 *Hero) float64 {
   xPow := math.Pow(float64(h1.Xpos-h2.Xpos), 2)
   yPow := math.Pow(float64(h1.Ypos-h2.Ypos), 2)
   distance := math.Sqrt(xPow + yPow)
-  log.Debugf("[Battle] Hero 1: %s (%d,%d) | Hero 2: %s (%d,%d) | Distance: %.2f", h1.HeroName, h1.Xpos, h1.Ypos, h2.HeroName, h2.Xpos, h2.Ypos, distance)
+  log.Debugf("[Challenge] Hero 1: %s (%d,%d) | Hero 2: %s (%d,%d) | Distance: %.2f", h1.HeroName, h1.Xpos, h1.Ypos, h2.HeroName, h2.Xpos, h2.Ypos, distance)
   return distance
 }

@@ -10,18 +10,18 @@ import (
 )
 
 const (
-  xMax                 = 500
-  yMax                 = 500
-  xMin                 = 0
-  yMin                 = 0
-  levelUpSeconds       = 600 //TODO: Change to 600
-  levelUpBase          = float64(1.16)
-  challengeCooldown = time.Duration(1) * time.Minute
-  challengeDistance = 3 //TODO: Tune it
-  challengeMinGain = 60  //TODO: Tune it
-  challengeGainMultiplier = 20  //TODO: Tune it
-  godsendMinGain   = 60        //TODO: Tune it
-  godsendGainMultiplier = 20   //TODO: Tune it
+  xMax                    = 500
+  yMax                    = 500
+  xMin                    = 0
+  yMin                    = 0
+  levelUpSeconds          = 600 //TODO: Change to 600
+  levelUpBase             = float64(1.16)
+  challengeCooldown       = time.Duration(1) * time.Minute
+  challengeDistance       = 3  //TODO: Tune it
+  challengeMinGain        = 60 //TODO: Tune it
+  challengeGainMultiplier = 20 //TODO: Tune it
+  godsendMinGain          = 60 //TODO: Tune it
+  godsendGainMultiplier   = 20 //TODO: Tune it
 
 )
 
@@ -152,7 +152,7 @@ func (g *Game) activateHero(name, token string) bool {
   g.heroes[i].nextLevelAt = ttlToDatetime(ttl)
   g.heroes[i].Enabled = true
 
-  var message = fmt.Sprintf("Success! %s, %s, of the %s race has joined Bacelona's Fantasy Realm. Next Level in %d seconds.",g.heroes[i].HeroName, g.heroes[i].HeroTitle, g.heroes[i].HeroRace, g.heroes[i].getTTL())
+  var message = fmt.Sprintf("Success! %s, %s, of the %s race has joined Bacelona's Fantasy Realm. Next Level in %d seconds.", g.heroes[i].HeroName, g.heroes[i].HeroTitle, g.heroes[i].HeroRace, g.heroes[i].getTTL())
 
   go g.sendEvent(message, g.heroes[i])
 
