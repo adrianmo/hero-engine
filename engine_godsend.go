@@ -2,7 +2,6 @@ package main
 
 import (
   "math/rand"
-
   "fmt"
 )
 
@@ -56,7 +55,7 @@ func (g *Game) GodSend() {
         seconds := rand.Intn(50) * (g.heroes[i].Level + 1)
         g.heroes[i].updateTTL(0 - seconds)
 
-        message = fmt.Sprintf("%s %s. This wondrous godsend has accelerated him %d seconds", g.heroes[i].HeroName, goodEvents[goodEventID], seconds)
+        message = fmt.Sprintf("%s %s. This wondrous godsend has accelerated him/her %d seconds for the next Level!", g.heroes[i].HeroName, goodEvents[goodEventID], seconds)
 
       } else { // Upgrade a Weapon
 
