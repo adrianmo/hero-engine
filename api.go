@@ -12,7 +12,7 @@ type Join struct {
   Email     string `json:"email" binding:"required"`
   HeroName  string `json:"heroName" binding:"required"`
   HeroClass string `json:"heroClass" binding:"required"`
-  Twitter   string `json:"twitter" binding:"required"`
+  Twitter   string `json:"twitter"`
 }
 
 type API struct {
@@ -62,7 +62,7 @@ func (api *API) heroPost(c *gin.Context) {
   api.game.joinChan <- req
   res := <-req.Response
   if res.success {
-    c.String(http.StatusOK, res.message)
+    c.JSON(http.StatusOK, gin.H{"token": res.message})
   } else {
     c.String(http.StatusBadRequest, res.message)
   }

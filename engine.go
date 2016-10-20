@@ -135,7 +135,7 @@ func (g *Game) joinHero(firstName, lastName, email, twitter, heroName, heroClass
   message := fmt.Sprintf("Hero %s has been created, but will not play until it's activated.", hero.HeroName)
   go g.sendEvent(message, hero)
 
-  return true, fmt.Sprintf("Token: %s", hero.token)
+  return true, hero.token
 }
 
 func (g *Game) activateHero(name, token string) bool {
