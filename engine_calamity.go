@@ -1,69 +1,99 @@
 package main
 
-import "math/rand"
+import (
+
+
+  "fmt"
+  "math/rand"
+)
 
 func (g *Game) Calamity() {
 
-  //TODO Complete Calamity
+    var calamity = []string{
 
-  /*
-     var bad_events = map[int]string{}
+     " was bitten by Neutron",
+     " fell into a hole",
+     " bit their tongue",
+     " set thyself on fire",
+     " ate a poisonous fruit",
+     " lost their mind",
+     " died, temporarily..",
+     " was caught in a terrible snowstorm",
+     " EXPLODED, somewhat..",
+     " got knifed in a dark alley",
+     " saw an episode of Ally McBeal",
+     " got turned INSIDE OUT, practically",
+     " ate a very disagreeable fruit, getting a terrible case of heartburn",
+     " met up with a mob hitman for not paying his hosting bills",
+     " has fallen ill with the black plague",
+     " was struck by lightning",
+     " was attacked by a rabid giant rabbit",
+     " was attacked by a rabid wolverine",
+     " was set on fire",
+     " was decapitated, temporarily..",
+     " was tipped by a cow",
+     " was bucked from a horse",
+     " was bitten by a møøse",
+     " was sat on by a giant",
+     " ate a plate of discounted, day-old sushi",
+     " got harassed by peer",
+     " got lost in the woods",
+     " misplaced his map",
+     " broke his/her compass",
+     " lost his/her glasses",
+     " walked face-first into a tree",
+     " uploaded a review with a bunch of PRINT statements",
+     " realised the code he was writing for the last five hours was already in Mitaka",
+     " walked face-first into a tree",
+    }
 
-     bad_events[1] = " was bitten by Neutron"
-     bad_events[2] = " fell into a hole"
-     bad_events[3] = " bit their tongue"
-     bad_events[4] = " set thyself on fire"
-     bad_events[5] = " ate a poisonous fruit"
-     bad_events[6] = " lost their mind"
-     bad_events[7] = " died, temporarily.."
-     bad_events[8] = " was caught in a terrible snowstorm"
-     bad_events[9] = " EXPLODED, somewhat.."
-     bad_events[10] = " got knifed in a dark alley"
-     bad_events[11] = " saw an episode of Ally McBeal"
-     bad_events[12] = " got turned INSIDE OUT, practically"
-     bad_events[13] = " ate a very disagreeable fruit, getting a terrible case of heartburn"
-     bad_events[14] = " met up with a mob hitman for not paying his hosting bills"
-     bad_events[15] = " has fallen ill with the black plague"
-     bad_events[16] = " was struck by lightning"
-     bad_events[17] = " was attacked by a rabid giant rabbit"
-     bad_events[18] = " was attacked by a rabid wolverine"
-     bad_events[19] = " was set on fire"
-     bad_events[20] = " was decapitated, temporarily.."
-     bad_events[21] = " was tipped by a cow"
-     bad_events[22] = " was bucked from a horse"
-     bad_events[23] = " was bitten by a møøse"
-     bad_events[24] = " was sat on by a giant"
-     bad_events[25] = " ate a plate of discounted, day-old sushi"
-     bad_events[26] = " got harassed by peer"
-     bad_events[27] = " got lost in the woods"
-     bad_events[28] = " misplaced his map"
-     bad_events[29] = " broke his compass"
-     bad_events[30] = " lost his glasses"
-     bad_events[31] = " walked face-first into a tree"
-     //OpenStack Related
-     bad_events[32] = " uploaded a review with a bunch of PRINT statements"
-     bad_events[33] = " realised the code he was writing for the last five hours was already in Mitaka"
-     bad_events[34] = " walked face-first into a tree"
-     bad_events[35] = " walked face-first into a tree"
 
-       items :=[10]string{"weapon","tunic","shield","leggins","ring","gloves","boots","helm","charm","amulet"}
 
-  */
   for i := range g.heroes {
+
     if !g.heroes[i].Enabled {
       continue
     }
 
-    if rand.Int31n(2000) == 1 {
+    if rand.Intn(1) == 0 {
 
-      if rand.Intn(10) == 1 { //Ultra Godsend
+      var message string
 
-      } else {
+      if rand.Intn(10) < 2 { //Ultra Calamity 20%
 
+        //Select a Calamity Events Random text + Removes time to level up
+        calamityEventID := rand.Intn(len(calamity))
+        seconds := rand.Intn(50) * (g.heroes[i].Level + 1)
+        g.heroes[i].updateTTL(0 - seconds)
+
+        message = fmt.Sprintf("%s %s. This terrible calamity has slowed him/her %d seconds for the next Level!", g.heroes[i].HeroName, calamity[calamityEventID], seconds)
+
+      } else { // Upgrade a Weapon
+
+        items := [6]string{"weapon", "tunic", "shield", "leggings", "amulet", "charm"}
+        var itemType = items[rand.Intn(6)]
+
+        g.heroes[i].updateItem(itemType, int(float64(g.heroes[i].Equipment.Weapon)* 0.9))
+
+        switch itemType {
+        case "weapon":
+          message = fmt.Sprintf("%s left his weapon out in the rain to rust! %s's weapon loses 10%% effectiveness.", g.heroes[i].HeroName, g.heroes[i].HeroName)
+        case "tunic":
+          message = fmt.Sprintf("%s spilled a level 7 shrinking potion on his tunic! %s's tunic loses 10%% effectiveness.", g.heroes[i].HeroName, g.heroes[i].HeroName)
+        case "shield":
+          message = fmt.Sprintf("%s's shield was damaged by a dragon's fiery breath! %s's shield loses 10%% effectiveness.", g.heroes[i].HeroName, g.heroes[i].HeroName)
+        case "leggings":
+          message = fmt.Sprintf("%s' burned a hole through his leggings while ironing them! %s's leggings loses 10%% effectiveness.", g.heroes[i].HeroName, g.heroes[i].HeroName)
+        case "amulet":
+          message = fmt.Sprintf("%s fell, chipping the stone in his amulet! %s's amulet loses 10%% effectiveness.", g.heroes[i].HeroName, g.heroes[i].HeroName)
+        case "charm":
+          message = fmt.Sprintf("%s slipped and dropped his charm in a dirty bog! %s's charm loses 10%% effectiveness.", g.heroes[i].HeroName, g.heroes[i].HeroName)
+        }
       }
-      g.heroes[i].Xpos = truncateInt(g.heroes[i].Xpos+(rand.Intn(3)-1), xMin, xMax)
-      g.heroes[i].Ypos = truncateInt(g.heroes[i].Ypos+(rand.Intn(3)-1), yMin, yMax)
 
+      if len(message) > 0 {
+        g.sendEvent("[Calamity] "+message, g.heroes[i])
+      }
     }
   }
 }
