@@ -1,4 +1,4 @@
-# Game Engine
+# Hero Engine [![Build Status](https://travis-ci.org/VxRackNeutrino/hero-engine.svg?branch=master)](https://travis-ci.org/VxRackNeutrino/hero-engine)
 
 ## API
 

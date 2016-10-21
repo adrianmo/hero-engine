@@ -1,0 +1,30 @@
+language: go
+
+go:
+  - '1.7'
+
+env:
+  global:
+    secure: LZQTnFZSUYeKN1Phocd/XGrfc5zJYeHj9mmAbARPGLFOAB4EDIiHg4tBdXkKtdHcXNAJdagwltB8wHJ3tTHTi44bKfhREovY9foiibxSDUwWQX73Qz9sAr1TKYY2FIFehornrnTeYcWk+J62DJmIoPst3rQf+vuy34YljrRlri1rHaqga/4jEKO25dv+UkSE0EZK568DHAjTpRSRakSonSipPy1GC3EtcbYT61QXf74QdNZCrX7tN2Y5/7skNL5ILfO6Q9cEbGK6+Em3sJ5z1/geZsjS+aYIepbTahYOiAcCYwu0m5kGEwwXjEgMW8LHBRiM1Mc7jUa2ckF2cLyGuv9RPecEY8hVA/rdNI+wJg/If3k7vE6vjKVnQaMWo5Edk2b9/uQkjYREwAvuzG80mY23W4sCdfDU3nfVixtEWALMYIpAoYO6Q6i/tsp515Owp5q7zinnVgQo2QiLHeE381PonRHEDRIHt+CDY/WnqSVUn5XzqedroTiDDq5aR8xdxtDnrPSH1qcrphfT71LHhhkxVdcmN9hG0zgWDynBUqk1Ogh4n2PGUQJrg+gafj1gMvTpr10tXmLsLdJS+DLAHhZvAXC8WQ5WIFygcdznaqIgVCIrAZSlhQZeBP+/fPeV1e9+W6RVJ4RI2axYdVudvwGO0f3jpUV/orLupOJ2V1A=
+
+before_install:
+  - go get github.com/golang/lint/golint
+
+install:
+  - go get -d -v ./... && go build -v ./...
+  - curl -o swagger -L'#' https://github.com/go-swagger/go-swagger/releases/download/0.6.0/swagger_linux_amd64
+  - chmod +x ./swagger
+
+script:
+  - go vet -x ./...
+  - $HOME/gopath/bin/golint ./...
+  - go test -v ./...
+  - ./swagger validate ../hero-engine/swagger.yaml
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    curl -X POST https://registry.hub.docker.com/u/emccorp/hero-web/trigger/$TRIGGER_TOKEN/;
+    fi
+
+notifications:
+  slack: emccaspian:cR8v3N3cwtzCPMgwObikgDhR
