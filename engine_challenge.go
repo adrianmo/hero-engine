@@ -10,7 +10,7 @@ import (
 )
 
 // battle function implements the battle logic
-func (g *Game) CheckChallenge() {
+func (g *Game) checkChallenge() {
   var h1Score, h2Score, gain int
   var message string
 

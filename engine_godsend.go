@@ -1,13 +1,13 @@
 package main
 
 import (
-  "math/rand"
   "fmt"
+  "math/rand"
 )
 
-// GodSend function implements the Gods gits to Heros  on the Realm. It happens 1 an hour and it has 1/4000 chances
+// godSend function implements the Gods gits to Heros  on the Realm. It happens 1 an hour and it has 1/4000 chances
 // to strike a Hero. The outcome has 80 chances to be good and 20 chances to the bad
-func (g *Game) GodSend() {
+func (g *Game) godSend() {
 
   var goodEvents = []string{
     "found a pair of nice Shoes",

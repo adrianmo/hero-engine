@@ -28,6 +28,7 @@ type Hero struct {
   lastBattleAt time.Time
 }
 
+// Equipment contains the item levels for a Hero
 type Equipment struct {
   Ring     int `json:"ring"`
   Amulet   int `json:"amulet"`
@@ -42,6 +43,7 @@ type Equipment struct {
   Total    int `json:"total"`
 }
 
+// Event contains information about an world event
 type Event struct {
   Type string    `json:"type"`
   Text string    `json:"text"`

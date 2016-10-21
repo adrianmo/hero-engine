@@ -6,6 +6,7 @@ import (
   "github.com/gin-gonic/gin"
 )
 
+// Join contains parameters received when creating a new Hero
 type Join struct {
   FirstName string `json:"firstName" binding:"required"`
   LastName  string `json:"lastName" binding:"required"`
@@ -15,6 +16,7 @@ type Join struct {
   Twitter   string `json:"twitter"`
 }
 
+// API struct contains dependencies for the API
 type API struct {
   game *Game
 }

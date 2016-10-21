@@ -165,6 +165,7 @@ func (g *Game) saveEventToDB(message string, heroes []*Hero) error {
   return nil
 }
 
+// GetEventsForHeroFromDB returns the events for a particular Hero
 func (g *Game) GetEventsForHeroFromDB(heroID int64) ([]Event, error) {
   db, err := GetDBConnection(g.databaseURL)
   if err != nil {
