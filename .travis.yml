@@ -23,7 +23,7 @@ script:
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    curl -X POST https://registry.hub.docker.com/u/emccorp/hero-web/trigger/$TRIGGER_TOKEN/;
+    curl -X POST https://registry.hub.docker.com/u/emccorp/hero-engine/trigger/$TRIGGER_TOKEN/;
     fi
 
 notifications:
