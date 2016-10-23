@@ -1,0 +1,11 @@
+---
+applications:
+- name: hero-engine
+  host: hero-engine-dev
+  command: hero-engine
+  memory: 512M
+  services:
+    - hero-mysql
+  env:
+    GOVERSION: go1.7
+    GOPACKAGENAME: github.com/vxrackneutrino/hero-engine
