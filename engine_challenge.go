@@ -55,8 +55,8 @@ func (g *Game) checkChallenge() {
         continue
       }
 
-      h1Score = rand.Intn(h1.getTotalItems()) + h1.Level
-      h2Score = rand.Intn(h2.getTotalItems()) + h2.Level
+      h1Score = rand.Intn(h1.getTotalItems()+1) + h1.Level
+      h2Score = rand.Intn(h2.getTotalItems()+1) + h2.Level
 
       if h1Score == h2Score {
         message = fmt.Sprintf("%s and %s fought and tied.", h1.HeroName, h2.HeroName)

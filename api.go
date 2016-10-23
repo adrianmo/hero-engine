@@ -104,11 +104,6 @@ func (api *API) heroActivate(c *gin.Context) {
 
 func (api *API) heroEvents(c *gin.Context) {
   name := c.Param("name")
-  token := c.Request.Header.Get("X-Auth-Token")
-  if len(token) == 0 {
-    c.String(http.StatusUnauthorized, "No auth token is present")
-    return
-  }
 
   hero, err := api.game.getHero(name)
   if err != nil {
@@ -122,7 +117,7 @@ func (api *API) heroEvents(c *gin.Context) {
     return
   }
 
-  c.JSON(http.StatusOK, events)
+  c.JSON(http.StatusOK, gin.H{"events": events, "count": len(events)})
 }
 
 func (api *API) exit(c *gin.Context) {
