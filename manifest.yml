@@ -7,5 +7,4 @@ applications:
   services:
     - hero-mysql
   env:
-    GOVERSION: go1.7
     GOPACKAGENAME: github.com/vxrackneutrino/hero-engine

@@ -2,7 +2,7 @@ package main
 
 import (
   "net/http"
-
+  "os"
   "github.com/gin-gonic/gin"
 )
 
@@ -33,7 +33,8 @@ func (g *Game) StartAPI() {
   router.GET("/hero/:name/activate", api.heroActivate)
   router.GET("/hero/:name/events", api.heroEvents)
   router.GET("/exit", api.exit)
-  router.Run(":8080")
+  port := os.Getenv("PORT")
+  router.Run(port)
 }
 
 func (api *API) heroList(c *gin.Context) {
