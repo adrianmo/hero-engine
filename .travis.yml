@@ -12,14 +12,12 @@ before_install:
 
 install:
   - go get -d -v ./... && go build -v ./...
-  - go get github.com/tools/godep
   - curl -o swagger -L'#' https://github.com/go-swagger/go-swagger/releases/download/0.6.0/swagger_linux_amd64
   - chmod +x ./swagger
 
 script:
   - go vet -x ./...
   - $HOME/gopath/bin/golint ./...
-  - $HOME/gopath/bin/godep
   - go test -v ./...
   - ./swagger validate ../hero-engine/swagger.yaml
 

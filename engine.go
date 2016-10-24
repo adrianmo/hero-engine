@@ -196,7 +196,10 @@ func (g *Game) getHero(name string) (*Hero, error) {
 func (g *Game) sendEvent(message string, heroes ...*Hero) {
   log.Infof("[Event] %s", message)
 
-  g.saveEventToDB(message, heroes)
+  err := g.saveEventToDB(message, heroes)
+  if err != nil {
+    log.Error(err)
+  }
 }
 
 /*
