@@ -4,8 +4,9 @@ import (
   "database/sql"
   "strconv"
   "time"
-  cfenv "github.com/cloudfoundry-community/go-cfenv"
+
   log "github.com/Sirupsen/logrus"
+  cfenv "github.com/cloudfoundry-community/go-cfenv"
 
   _ "github.com/go-sql-driver/mysql"
 )
@@ -14,32 +15,32 @@ import (
 func GetDBConnection(databaseURL string) (*sql.DB, error) {
   var db *sql.DB
   appEnv, err := cfenv.Current()
-  if err !=  nil {
+  if err != nil {
     db, err = sql.Open("mysql", databaseURL+"?parseTime=true")
     if err != nil {
       return nil, err
     }
   } else {
     mysqlEnv, err := appEnv.Services.WithName("hero-mysql")
-		if err != nil {
-			return nil, err
-		}
-		mysqlPort := ""
-		if val, ok := mysqlEnv.Credentials["port"].(string); ok {
-			mysqlPort = val
-		} else {
-			mysqlPort = strconv.FormatFloat(mysqlEnv.Credentials["port"].(float64), 'f', -1, 64)
-		}
-		db, err = sql.Open("mysql", mysqlEnv.Credentials["username"].(string) + ":" + mysqlEnv.Credentials["password"].(string) + "@tcp(" + mysqlEnv.Credentials["hostname"].(string) + ":" + mysqlPort + ")/" + mysqlEnv.Credentials["name"].(string) + "?parseTime=true")
-		if err != nil {
-			return nil, err
-		}
+    if err != nil {
+      return nil, err
+    }
+    mysqlPort := ""
+    if val, ok := mysqlEnv.Credentials["port"].(string); ok {
+      mysqlPort = val
+    } else {
+      mysqlPort = strconv.FormatFloat(mysqlEnv.Credentials["port"].(float64), 'f', -1, 64)
+    }
+    db, err = sql.Open("mysql", mysqlEnv.Credentials["username"].(string)+":"+mysqlEnv.Credentials["password"].(string)+"@tcp("+mysqlEnv.Credentials["hostname"].(string)+":"+mysqlPort+")/"+mysqlEnv.Credentials["name"].(string)+"?parseTime=true")
+    if err != nil {
+      return nil, err
+    }
   }
 
   err = db.Ping()
   if err != nil {
-      db.Close()
-      return nil, err
+    db.Close()
+    return nil, err
   }
 
   return db, nil
@@ -192,7 +193,7 @@ func (g *Game) GetEventsForHeroFromDB(heroID int64) ([]Event, error) {
   }
   defer db.Close()
 
-  rows, err := db.Query("SELECT w.event_text, w.event_time FROM heroworldevent h INNER JOIN worldevent w ON h.worldevent_id=w.id WHERE h.id=? ORDER BY w.event_time DESC", heroID)
+  rows, err := db.Query("SELECT w.event_text, w.event_time FROM heroworldevent h INNER JOIN worldevent w ON h.worldevent_id=w.hero_id WHERE h.hero_id=? ORDER BY w.event_time DESC", heroID)
 
   if err != nil {
     return nil, err
