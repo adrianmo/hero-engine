@@ -16,7 +16,7 @@ func (g *Game) handOfGod() {
       continue
     }
 
-    if rand.Intn(10) == 1 {
+    if rand.Intn(2000) == 1 {
       var message string
       var timeCalculation = int(float32((rand.Intn(71) + 5)) / 100 * float32((g.heroes[i].Level+1)*3600))
 

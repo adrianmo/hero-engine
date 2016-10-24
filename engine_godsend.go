@@ -44,7 +44,7 @@ func (g *Game) godSend() {
       continue
     }
 
-    if rand.Intn(1) == 0 {
+    if rand.Intn(500) == 0 {
 
       var message string
 
@@ -81,7 +81,7 @@ func (g *Game) godSend() {
       }
 
       if len(message) > 0 {
-        g.sendEvent("[Godsend] "+message, g.heroes[i])
+        g.sendEvent(message, g.heroes[i])
       }
     }
   }

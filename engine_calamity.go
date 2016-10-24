@@ -51,7 +51,7 @@ func (g *Game) calamity() {
       continue
     }
 
-    if rand.Intn(1) == 0 {
+    if rand.Intn(500) == 0 {
 
       var message string
 
@@ -88,7 +88,7 @@ func (g *Game) calamity() {
       }
 
       if len(message) > 0 {
-        g.sendEvent("[Calamity] "+message, g.heroes[i])
+        g.sendEvent(+message, g.heroes[i])
       }
     }
   }

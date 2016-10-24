@@ -87,8 +87,8 @@ func (g *Game) StartEngine() {
       g.moveHeroes()
       g.checkLevels()
       g.checkChallenge()
-      //g.godSend()
-      //g.calamity()
+      g.godSend()
+      g.calamity()
     case <-tickerHog.C:
       log.Debug("[Ticker HoG] Hand of god event")
       g.handOfGod()
