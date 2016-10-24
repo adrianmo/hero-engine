@@ -36,10 +36,9 @@ func GetDBConnection(databaseURL string) (*sql.DB, error) {
 		}
   }
 
-  defer db.Close()
-
   err = db.Ping()
   if err != nil {
+      db.Close()
       return nil, err
   }
 
