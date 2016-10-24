@@ -36,10 +36,11 @@ func GetDBConnection(databaseURL string) (*sql.DB, error) {
 		}
   }
 
+  defer db.Close()
+
   err = db.Ping()
   if err != nil {
-    db.Close()
-    return nil, err
+      return nil, err
   }
 
   return db, nil
@@ -98,7 +99,7 @@ func LoadFromDB(g *Game) error {
   defer db.Close()
 
   rows, err := db.Query("SELECT " +
-    "hero_id, " +
+    "id, " +
     "COALESCE(hero_name, '') AS hero_name, " +
     "COALESCE(player_name, '') AS player_name," +
     "COALESCE(player_lastname, '') AS player_lastname, " +
@@ -192,7 +193,7 @@ func (g *Game) GetEventsForHeroFromDB(heroID int64) ([]Event, error) {
   }
   defer db.Close()
 
-  rows, err := db.Query("SELECT w.event_text, w.event_time FROM heroworldevent h INNER JOIN worldevent w ON h.worldevent_id=w.worldevent_id WHERE h.hero_id=? ORDER BY w.event_time DESC", heroID)
+  rows, err := db.Query("SELECT w.event_text, w.event_time FROM heroworldevent h INNER JOIN worldevent w ON h.worldevent_id=w.id WHERE h.id=? ORDER BY w.event_time DESC", heroID)
 
   if err != nil {
     return nil, err
