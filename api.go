@@ -34,7 +34,10 @@ func (g *Game) StartAPI() {
   router.GET("/hero/:name/events", api.heroEvents)
   router.GET("/exit", api.exit)
   port := os.Getenv("PORT")
-  router.Run(port)
+  if port == "" {
+    port = "8080"
+  }
+  router.Run(":" + port)
 }
 
 func (api *API) heroList(c *gin.Context) {
