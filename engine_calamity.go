@@ -88,7 +88,7 @@ func (g *Game) calamity() {
       }
 
       if len(message) > 0 {
-        g.sendEvent(+message, g.heroes[i])
+        g.sendEvent(message, g.heroes[i])
       }
     }
   }
