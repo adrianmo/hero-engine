@@ -193,7 +193,7 @@ func (g *Game) GetEventsForHeroFromDB(heroID int64) ([]Event, error) {
   }
   defer db.Close()
 
-  rows, err := db.Query("SELECT w.event_text, w.event_time FROM heroworldevent h INNER JOIN worldevent w ON h.worldevent_id=w.hero_id WHERE h.hero_id=? ORDER BY w.event_time DESC", heroID)
+  rows, err := db.Query("SELECT w.event_text, w.event_time FROM heroworldevent h INNER JOIN worldevent w ON h.worldevent_id=w.id WHERE h.hero_id=? ORDER BY w.event_time DESC", heroID)
 
   if err != nil {
     return nil, err
