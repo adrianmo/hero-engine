@@ -1,0 +1,66 @@
+{
+	"ImportPath": "hero-engine",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v74",
+	"Deps": [
+		{
+			"ImportPath": "github.com/Sirupsen/logrus",
+			"Comment": "v0.10.0-38-g3ec0642",
+			"Rev": "3ec0642a7fb6488f65b06f9040adc67e3990296a"
+		},
+		{
+			"ImportPath": "github.com/cloudfoundry-community/go-cfenv",
+			"Comment": "v1.14.0-7-gc567d77",
+			"Rev": "c567d77dab8551bc4077e68e5a04415f1d74a911"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin",
+			"Comment": "v1.0-2-g3900df0",
+			"Rev": "3900df04d2a88e22beaf6a2970c63648b9e1b0e1"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/binding",
+			"Comment": "v1.0-2-g3900df0",
+			"Rev": "3900df04d2a88e22beaf6a2970c63648b9e1b0e1"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/render",
+			"Comment": "v1.0-2-g3900df0",
+			"Rev": "3900df04d2a88e22beaf6a2970c63648b9e1b0e1"
+		},
+		{
+			"ImportPath": "github.com/go-sql-driver/mysql",
+			"Comment": "v1.2-203-gdbc3fe2",
+			"Rev": "dbc3fe23a4aced10a53834106e288b155d17e2ee"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Rev": "98fa357170587e470c5f27d3c3ea0947b71eb455"
+		},
+		{
+			"ImportPath": "github.com/manucorporat/sse",
+			"Rev": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d"
+		},
+		{
+			"ImportPath": "github.com/mitchellh/mapstructure",
+			"Rev": "f3009df150dadf309fdee4a54ed65c124afad715"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "c33d37840d93fc75251f49ab83c5fc8b2faea5e8"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "c200b10b5d5e122be351b67af224adc6128af5bf"
+		},
+		{
+			"ImportPath": "gopkg.in/go-playground/validator.v8",
+			"Comment": "v8.18.1",
+			"Rev": "5f57d2222ad794d0dffb07e664ea05e2ee07d60c"
+		},
+		{
+			"ImportPath": "gopkg.in/yaml.v2",
+			"Rev": "a5b47d31c556af34a302ce5d659e6fea44d90de0"
+		}
+	]
+}

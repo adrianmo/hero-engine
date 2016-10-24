@@ -2,8 +2,9 @@ package main
 
 import (
   "database/sql"
+  "strconv"
   "time"
-
+  cfenv "github.com/cloudfoundry-community/go-cfenv"
   log "github.com/Sirupsen/logrus"
 
   _ "github.com/go-sql-driver/mysql"
@@ -11,10 +12,28 @@ import (
 
 // GetDBConnection builds and returns the database connection
 func GetDBConnection(databaseURL string) (*sql.DB, error) {
-
-  db, err := sql.Open("mysql", databaseURL+"?parseTime=true")
-  if err != nil {
-    return nil, err
+  var db *sql.DB
+  appEnv, err := cfenv.Current()
+  if err !=  nil {
+    db, err = sql.Open("mysql", databaseURL+"?parseTime=true")
+    if err != nil {
+      return nil, err
+    }
+  } else {
+    mysqlEnv, err := appEnv.Services.WithName("hero-mysql")
+		if err != nil {
+			return nil, err
+		}
+		mysqlPort := ""
+		if val, ok := mysqlEnv.Credentials["port"].(string); ok {
+			mysqlPort = val
+		} else {
+			mysqlPort = strconv.FormatFloat(mysqlEnv.Credentials["port"].(float64), 'f', -1, 64)
+		}
+		db, err = sql.Open("mysql", mysqlEnv.Credentials["username"].(string) + ":" + mysqlEnv.Credentials["password"].(string) + "@tcp(" + mysqlEnv.Credentials["hostname"].(string) + ":" + mysqlPort + ")/" + mysqlEnv.Credentials["name"].(string) + "?parseTime=true")
+		if err != nil {
+			return nil, err
+		}
   }
 
   err = db.Ping()

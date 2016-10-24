@@ -8,3 +8,4 @@ applications:
     - hero-mysql
   env:
     GOPACKAGENAME: github.com/vxrackneutrino/hero-engine
+    ADMIN_TOKEN: 1234
