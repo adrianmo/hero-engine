@@ -19,7 +19,7 @@ install:
 script:
   - go vet -x ./...
   - $HOME/gopath/bin/golint ./...
-  - $HOME/gopath/bin/godep save
+  - $HOME/gopath/bin/godep
   - go test -v ./...
   - ./swagger validate ../hero-engine/swagger.yaml
 
@@ -30,16 +30,16 @@ after_success:
 notifications:
   slack: emccaspian:cR8v3N3cwtzCPMgwObikgDhR
 
-deploy:
-  provider: cloudfoundry
-  edge: true
-  skip_cleanup: true
-  api: https://api.run.pivotal.io
-  username: adrian.moreno@emc.com
-  password:
-    secure: WBHWF/TPU7sOLGU8kVPEax+9XtyXPXsQSrxv6hhLgQRRPgEjGn02tTDdLQe8Zn7wB3vn//jd13ZWIq10RuJz6x8VoKuZbfiil3E7TteUgEKJgLekFoyS03h8Qc1fE4MN7X86uSgl8w9t7+GIdV1hapn8yg0JDx5fc+ijVulDybLjj7CR5TfvwyTKGbZyc7Riinw2rA8EP/3FYGCX9Xkph0lqUKtCusjTmhvxcwFM6iHQMXdzSNng9TdKWYTrMYwMjywt7zw6wzhFSgZQAwA5ogIzAVaujyphrTtpSlkJEV2IKWNB9+hyxDxy0Zq9qDv44jEBx/DQ2J6v4Uj/17QiPkSYCrLj3HKgZn/7vD+GimyMcLASI2FzlYukyIaZKDg46cRrA/8HEUOf0YiECWI+xrPB9YbrxMXr56i77sKOAzDNw3qMBbP0DlGvMKo0M3tqYnAqcSIv2peImXybJvchwxOPXc15mt1c6MlYIFnNGKPftAHetGfvoeFoAY4B3/t0Dshu0y31K8w/OgImqh2D7jHcbzqfVGHuQjwPxiS8E49DfWk0fluqeWRD4Fl5+1fSpBU9kQ/gmI9Dzyk4lljZuqhbZRY1d0mzDmPkAkogKteut5T93SET8xGNilsOcGF8cUxcygVTAeVg7ORNU31YYx8D/rMiaEd+tbtZOULdWdE=
-  organization: vxrackneutrino
-  space: development
-  on:
-    repo: VxRackNeutrino/hero-engine
-    branch: master
+# deploy:
+#   provider: cloudfoundry
+#   edge: true
+#   skip_cleanup: true
+#   api: https://api.run.pivotal.io
+#   username: adrian.moreno@emc.com
+#   password:
+#     secure: WBHWF/TPU7sOLGU8kVPEax+9XtyXPXsQSrxv6hhLgQRRPgEjGn02tTDdLQe8Zn7wB3vn//jd13ZWIq10RuJz6x8VoKuZbfiil3E7TteUgEKJgLekFoyS03h8Qc1fE4MN7X86uSgl8w9t7+GIdV1hapn8yg0JDx5fc+ijVulDybLjj7CR5TfvwyTKGbZyc7Riinw2rA8EP/3FYGCX9Xkph0lqUKtCusjTmhvxcwFM6iHQMXdzSNng9TdKWYTrMYwMjywt7zw6wzhFSgZQAwA5ogIzAVaujyphrTtpSlkJEV2IKWNB9+hyxDxy0Zq9qDv44jEBx/DQ2J6v4Uj/17QiPkSYCrLj3HKgZn/7vD+GimyMcLASI2FzlYukyIaZKDg46cRrA/8HEUOf0YiECWI+xrPB9YbrxMXr56i77sKOAzDNw3qMBbP0DlGvMKo0M3tqYnAqcSIv2peImXybJvchwxOPXc15mt1c6MlYIFnNGKPftAHetGfvoeFoAY4B3/t0Dshu0y31K8w/OgImqh2D7jHcbzqfVGHuQjwPxiS8E49DfWk0fluqeWRD4Fl5+1fSpBU9kQ/gmI9Dzyk4lljZuqhbZRY1d0mzDmPkAkogKteut5T93SET8xGNilsOcGF8cUxcygVTAeVg7ORNU31YYx8D/rMiaEd+tbtZOULdWdE=
+#   organization: vxrackneutrino
+#   space: development
+#   on:
+#     repo: VxRackNeutrino/hero-engine
+#     branch: master
