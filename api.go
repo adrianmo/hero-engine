@@ -3,6 +3,7 @@ package main
 import (
   "net/http"
   "os"
+
   "github.com/gin-gonic/gin"
 )
 
@@ -13,6 +14,7 @@ type Join struct {
   Email     string `json:"email" binding:"required"`
   HeroName  string `json:"heroName" binding:"required"`
   HeroClass string `json:"heroClass" binding:"required"`
+  HeroTitle string `json:"heroTitle"`
   Twitter   string `json:"twitter"`
 }
 
@@ -41,6 +43,11 @@ func (g *Game) StartAPI() {
 }
 
 func (api *API) heroList(c *gin.Context) {
+
+  for i := range api.game.heroes {
+    api.game.heroes[i].TTL = api.game.heroes[i].getTTL()
+  }
+
   c.JSON(http.StatusOK, gin.H{"heroes": api.game.heroes, "count": len(api.game.heroes)})
 }
 
@@ -64,6 +71,7 @@ func (api *API) heroPost(c *gin.Context) {
     twitter:   json.Twitter,
     heroName:  json.HeroName,
     heroClass: json.HeroClass,
+    heroTitle: json.HeroTitle,
   }
   api.game.joinChan <- req
   res := <-req.Response

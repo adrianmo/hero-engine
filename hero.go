@@ -103,7 +103,7 @@ func (h *Hero) updateItem(itemType string, itemLevel int) {
 }
 
 // NewHero initializes a Hero struct and returns it
-func NewHero(firstName, lastName, email, twitter, heroName, heroClass string) *Hero {
+func NewHero(firstName, lastName, email, twitter, heroName, heroClass, heroTitle string) *Hero {
   h := &Hero{
     FirstName:   firstName,
     LastName:    lastName,
@@ -111,6 +111,7 @@ func NewHero(firstName, lastName, email, twitter, heroName, heroClass string) *H
     Twitter:     twitter,
     HeroName:    heroName,
     HeroClass:   heroClass,
+    HeroTitle:   heroTitle,
     Enabled:     false,
     token:       randToken(),
     Level:       0,

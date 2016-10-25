@@ -14,10 +14,10 @@ const (
   yMax                    = 500
   xMin                    = 0
   yMin                    = 0
-  levelUpSeconds          = 600 //TODO: Change to 600
+  levelUpSeconds          = 600
   levelUpBase             = float64(1.16)
-  challengeCooldown       = time.Duration(1) * time.Minute
-  challengeDistance       = 3  //TODO: Tune it
+  challengeCooldown       = time.Duration(10) * time.Minute
+  challengeDistance       = 20 //TODO: Tune it
   challengeMinGain        = 60 //TODO: Tune it
   challengeGainMultiplier = 20 //TODO: Tune it
   godsendMinGain          = 60 //TODO: Tune it
@@ -99,7 +99,7 @@ func (g *Game) StartEngine() {
       }
     case req := <-g.joinChan:
       log.Info("[API Request] Join hero")
-      success, message := g.joinHero(req.firstName, req.lastName, req.email, req.twitter, req.heroName, req.heroClass, req.TokenRequest.token)
+      success, message := g.joinHero(req.firstName, req.lastName, req.email, req.twitter, req.heroName, req.heroClass, req.heroTitle, req.TokenRequest.token)
       req.Response <- GameResponse{success: success, message: message}
       close(req.Response)
     case req := <-g.activateHeroChan:
@@ -115,7 +115,7 @@ func (g *Game) StartEngine() {
 
 }
 
-func (g *Game) joinHero(firstName, lastName, email, twitter, heroName, heroClass, adminToken string) (bool, string) {
+func (g *Game) joinHero(firstName, lastName, email, twitter, heroName, heroClass, heroTitle, adminToken string) (bool, string) {
 
   if !g.authorizeAdmin(adminToken) {
     return false, "You are not authorized to perform this action."
@@ -125,7 +125,7 @@ func (g *Game) joinHero(firstName, lastName, email, twitter, heroName, heroClass
     return false, "This Hero name is already taken"
   }
 
-  hero := NewHero(firstName, lastName, email, twitter, heroName, heroClass)
+  hero := NewHero(firstName, lastName, email, twitter, heroName, heroClass, heroTitle)
 
   g.heroes = append(g.heroes, hero)
 
@@ -153,7 +153,7 @@ func (g *Game) activateHero(name, token string) bool {
   g.heroes[i].nextLevelAt = ttlToDatetime(ttl)
   g.heroes[i].Enabled = true
 
-  var message = fmt.Sprintf("Success! %s, %s, of the %s race has joined Bacelona's Fantasy Realm. Next Level in %d seconds.", g.heroes[i].HeroName, g.heroes[i].HeroTitle, g.heroes[i].HeroRace, g.heroes[i].getTTL())
+  var message = fmt.Sprintf("Success! %s, %s, has joined Barcelona's Fantasy Realm. Next level in %d seconds.", g.heroes[i].HeroName, g.heroes[i].HeroTitle, g.heroes[i].getTTL())
 
   go g.sendEvent(message, g.heroes[i])
 

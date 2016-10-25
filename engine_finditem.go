@@ -60,10 +60,10 @@ func (g *Game) findItem(hero *Hero) {
     if newItemLevel > currentItemLevel {
       // Replace the current item value with the new one
       hero.updateItem(itemType, newItemLevel)
-      message = fmt.Sprintf("You found a level %d %s! Your current %s %s only level %d, so it seems luck is with you!", newItemLevel, itemType, itemType, verb, currentItemLevel)
+      message = fmt.Sprintf("%s found a level %d %s! Your current %s %s only level %d, so it seems luck is with you!", hero.HeroName, newItemLevel, itemType, itemType, verb, currentItemLevel)
     } else {
       // Message back to player that current item level is better
-      message = fmt.Sprintf("You found a level %d %s! Your current %s %s level %d, so it seems Luck is against you. You toss the %s", newItemLevel, itemType, itemType, verb, currentItemLevel, itemType)
+      message = fmt.Sprintf("%s found a level %d %s! Your current %s %s level %d, so it seems Luck is against you. You toss the %s", hero.HeroName, newItemLevel, itemType, itemType, verb, currentItemLevel, itemType)
     }
 
     g.sendEvent(message, hero)

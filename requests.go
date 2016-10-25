@@ -26,6 +26,7 @@ type JoinRequest struct {
   twitter   string
   heroName  string
   heroClass string
+  heroTitle string
 }
 
 // ActivateHeroRequest is used to activate a Hero
